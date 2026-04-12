@@ -10,7 +10,9 @@
 
 ## 🏗️ Architecture globale
 
-Ce projet simule une infrastructure cloud sécurisée sur AWS, proche d’un environnement d’entreprise.
+Ce projet simule une infrastructure cloud sécurisée sur AWS, inspirée d’un environnement d’entreprise.
+
+L’objectif est de comprendre concrètement les bases de l’architecture cloud moderne.
 
 ![Architecture](./screenshots/aws-architecture.png)
 
@@ -18,13 +20,20 @@ Ce projet simule une infrastructure cloud sécurisée sur AWS, proche d’un env
 
 ## 🎯 Objectif du projet
 
-L’objectif est de concevoir et déployer une architecture cloud sécurisée afin de comprendre :
+Ce projet a pour objectif de pratiquer et renforcer mes compétences en Cloud Computing à travers la mise en place d’une architecture AWS complète et sécurisée.
 
-- La segmentation réseau dans AWS (VPC / Subnets)
-- La gestion des flux entre environnements public et privé
-- La sécurisation des accès via Security Groups
-- La mise en place d’un Bastion Host
-- Les bonnes pratiques d’architecture cloud
+Il s’inscrit dans une démarche de préparation aux certifications :
+- AZ-900 (Microsoft Azure Fundamentals)
+- AZ-104 (Azure Administrator Associate)
+
+Même si l’infrastructure est réalisée sur AWS, les concepts abordés sont transverses aux principaux providers cloud (AWS / Azure / GCP), notamment :
+
+- virtualisation des réseaux (VPC / VNet)
+- segmentation réseau (subnets / VLAN logiques)
+- gestion des machines virtuelles
+- contrôle des flux réseau
+- sécurisation des accès (Security Groups / NSG)
+- administration d’infrastructures cloud
 
 ---
 
@@ -37,7 +46,7 @@ Ce projet met en avant mes compétences en :
 - Gestion d’instances EC2 (public / privé)
 - Configuration de Security Groups (firewall cloud)
 - Mise en place d’un Bastion Host
-- Analyse et correction de problèmes réseau (SSH / connectivité)
+- Analyse et résolution de problèmes de connectivité réseau (SSH)
 - Compréhension des flux réseau en environnement cloud
 
 ---
@@ -49,6 +58,7 @@ L’infrastructure est composée de :
 - Un **VPC (10.0.0.0/16)** isolé
 - Un **subnet public (10.0.1.0/24)** pour les services exposés
 - Un **subnet privé (10.0.2.0/24)** pour les services internes
+- Un **Internet Gateway** pour l’accès Internet du subnet public
 - Un **Bastion Host** comme point d’accès sécurisé
 - Des **instances EC2** réparties selon leur rôle
 
@@ -57,7 +67,7 @@ L’infrastructure est composée de :
 ## 🔄 Flux réseau
 
 - 🌍 Internet → Web Server (HTTP/HTTPS)
-- 👨‍💻 Admin → Bastion Host (SSH)
+- 👨‍💻 Administrateur → Bastion Host (SSH)
 - 🔐 Bastion Host → Instance privée (SSH interne)
 - ❌ Aucun accès direct Internet → instance privée
 
@@ -77,7 +87,8 @@ Utilisateur → Bastion → Instance privée
 
 ### 🛡️ Sécurité :
 - SSH autorisé uniquement depuis une IP spécifique
-- Accès au réseau privé uniquement via règles explicites
+- Accès aux instances privées uniquement via règles explicites
+- Principe du moindre privilège appliqué
 
 ---
 
@@ -93,9 +104,9 @@ Utilisateur → Bastion → Instance privée
 ## 🔐 Sécurité mise en place
 
 - Isolation complète via VPC
-- Segmentation public / privé
-- Principe du moindre privilège appliqué
-- Bastion Host comme point d’entrée unique
+- Segmentation réseau public / privé
+- Application du principe du moindre privilège
+- Bastion Host comme point d’entrée unique d’administration
 - Absence d’IP publique sur les ressources sensibles
 
 ---
@@ -105,9 +116,9 @@ Utilisateur → Bastion → Instance privée
 Une tentative d’accès SSH direct entre une instance publique et une instance privée a échoué.
 
 ### 🔍 Cause :
-- compréhension initiale du modèle de sécurité AWS incomplète
+- mauvaise compréhension initiale du modèle de sécurité AWS
 - absence de règle explicite dans les Security Groups
-- isolation volontaire du subnet privé
+- isolation volontaire du subnet privé (architecture correcte)
 
 ### 🛠️ Résolution :
 - mise en place d’un Bastion Host
@@ -143,23 +154,23 @@ Une tentative d’accès SSH direct entre une instance publique et une instance 
 ✔ Serveur web accessible depuis Internet  
 ✔ Instance privée totalement isolée  
 ✔ Accès sécurisé via Bastion Host  
-✔ Architecture conforme à une logique d’entreprise  
+✔ Architecture conforme aux bonnes pratiques cloud  
 ✔ Sécurité et segmentation réseau respectées  
 
 ---
 
 ## 🚀 Améliorations possibles
 
-- Ajout d’un NAT Gateway pour les mises à jour des instances privées
-- Automatisation avec Terraform (Infrastructure as Code)
+- Ajout d’un NAT Gateway pour permettre les mises à jour des instances privées
+- Automatisation de l’infrastructure avec Terraform (IaC)
 - Ajout d’un Load Balancer pour la haute disponibilité
-- Mise en place d’un monitoring (CloudWatch)
-- Renforcement de la sécurité via IAM roles
+- Mise en place de monitoring avec AWS CloudWatch
+- Amélioration de la sécurité via IAM Roles
 
 ---
 
 ## 📚 Conclusion
 
-Ce projet m’a permis de comprendre concrètement l’architecture cloud AWS et les bonnes pratiques de sécurité réseau.
+Ce projet m’a permis de comprendre concrètement les bases de l’architecture cloud AWS et les bonnes pratiques de sécurité réseau.
 
 La mise en place d’un Bastion Host permet de reproduire une architecture réaliste utilisée en entreprise pour sécuriser les accès aux environnements sensibles tout en conservant une administration centralisée.
