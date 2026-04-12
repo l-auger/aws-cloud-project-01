@@ -8,93 +8,120 @@
 
 ---
 
+## 🏗️ Architecture globale
+
+![Architecture](./screenshots/aws-architecture.png)
+
+Ce projet simule une infrastructure cloud sécurisée sur AWS, proche d’un environnement d’entreprise.
+
+---
+
 ## 🎯 Objectif du projet
 
-Ce projet a pour objectif de concevoir et déployer une architecture cloud sécurisée sur AWS.
+L’objectif est de concevoir et déployer une architecture cloud sécurisée afin de comprendre :
 
-Il reproduit un environnement proche d’une infrastructure d’entreprise afin de comprendre :
-- la segmentation réseau
-- la sécurité des accès
-- la gestion des flux entre environnements public et privé
-- les bonnes pratiques d’administration cloud
+- La segmentation réseau dans AWS (VPC / Subnets)
+- La gestion des flux entre environnements public et privé
+- La sécurisation des accès via Security Groups
+- La mise en place d’un Bastion Host
+- Les bonnes pratiques d’architecture cloud
 
 ---
 
 ## 🧠 Compétences démontrées
 
-Ce projet met en avant ma capacité à :
+Ce projet met en avant mes compétences en :
 
-- Concevoir une architecture cloud sur AWS
-- Mettre en place un VPC avec segmentation réseau
-- Gérer des instances EC2 publiques et privées
-- Sécuriser les accès via Security Groups
-- Comprendre les flux réseau entre sous-réseaux
-- Mettre en place un Bastion Host
-- Diagnostiquer et corriger des problèmes de connectivité (SSH / réseau)
-
----
-
-## 🏗️ Architecture globale
-
-L’architecture est composée de 3 éléments principaux :
-
-- **Bastion Host** (accès sécurisé)
-- **Subnet public** (serveur web)
-- **Subnet privé** (serveur applicatif)
-
-👉 Le schéma d’architecture est disponible dans `/architecture`.
+- Conception d’architecture cloud sur AWS
+- Administration d’un VPC et de sous-réseaux
+- Gestion d’instances EC2 (public / privé)
+- Configuration de Security Groups (firewall cloud)
+- Mise en place d’un Bastion Host
+- Analyse et correction de problèmes réseau (SSH / connectivité)
+- Compréhension des flux réseau en environnement cloud
 
 ---
 
-## 🛡️ Bastion Host (point d’accès sécurisé)
+## 🌐 Architecture technique
+
+L’infrastructure est composée de :
+
+- Un **VPC (10.0.0.0/16)** isolé
+- Un **subnet public (10.0.1.0/24)** pour les services exposés
+- Un **subnet privé (10.0.2.0/24)** pour les services internes
+- Un **Bastion Host** comme point d’accès sécurisé
+- Des **instances EC2** réparties selon leur rôle
+
+---
+
+## 🔄 Flux réseau
+
+- 🌍 Internet → Web Server (HTTP/HTTPS)
+- 👨‍💻 Admin → Bastion Host (SSH)
+- 🔐 Bastion Host → Instance privée (SSH interne)
+- ❌ Aucun accès direct Internet → instance privée
+
+---
+
+## 🔐 Bastion Host
 
 Le Bastion Host est une instance EC2 placée dans le subnet public.
 
 ### 🎯 Rôle :
-- Point d’entrée unique vers le réseau privé
-- Accès SSH contrôlé et limité
-- Réduction de l’exposition des machines internes
+- Point d’entrée sécurisé vers le réseau privé
+- Accès SSH contrôlé et centralisé
+- Réduction de l’exposition des machines sensibles
 
 ### 🔗 Flux :
 Utilisateur → Bastion → Instance privée
 
-### 🔐 Sécurité :
-- SSH limité à une IP spécifique
-- Aucun accès direct Internet vers les instances privées
+### 🛡️ Sécurité :
+- SSH autorisé uniquement depuis une IP spécifique
+- Accès au réseau privé uniquement via règles explicites
 
 ---
 
-## 🌐 Fonctionnement de l’architecture
+## 🖥️ Fonctionnement de l’architecture
 
-- Le serveur web (EC2 public) est accessible depuis Internet via HTTP
-- Le Bastion Host permet un accès sécurisé au réseau interne
-- L’instance privée n’est pas accessible directement depuis Internet
-- Les échanges internes sont contrôlés via Security Groups
+- Le serveur web est accessible publiquement via HTTP
+- Le Bastion Host permet un accès sécurisé aux machines internes
+- L’instance privée n’est pas exposée à Internet
+- Les communications internes sont strictement contrôlées via Security Groups
 
 ---
 
 ## 🔐 Sécurité mise en place
 
-- Isolation réseau via VPC
-- Séparation public / privé
-- Bastion Host comme point d’entrée sécurisé
-- Security Groups appliquant le principe du moindre privilège
+- Isolation complète via VPC
+- Segmentation public / privé
+- Principe du moindre privilège appliqué
+- Bastion Host comme point d’entrée unique
 - Absence d’IP publique sur les ressources sensibles
 
 ---
 
 ## 🧩 Problème rencontré
 
-Un problème de connexion SSH vers l’instance privée a été rencontré.
+Une tentative d’accès SSH direct entre une instance publique et une instance privée a échoué.
 
-### Cause :
-- absence d’accès direct volontaire (subnet privé)
-- règles Security Group insuffisantes
-- mauvaise compréhension initiale des flux AWS
+### 🔍 Cause :
+- compréhension initiale du modèle de sécurité AWS incomplète
+- absence de règle explicite dans les Security Groups
+- isolation volontaire du subnet privé
 
-### Résolution :
+### 🛠️ Résolution :
 - mise en place d’un Bastion Host
-- configuration des Security Groups pour autoriser uniquement les flux internes nécessaires
+- configuration des Security Groups selon le principe du moindre privilège
+- validation des flux réseau entre subnets
+
+---
+
+## 🧪 Tests réalisés
+
+- Connexion SSH vers Bastion Host
+- Connexion SSH Bastion → Instance privée
+- Accès HTTP vers serveur web public
+- Vérification de l’isolation du subnet privé
 
 ---
 
@@ -103,8 +130,8 @@ Un problème de connexion SSH vers l’instance privée a été rencontré.
 - AWS VPC
 - AWS EC2
 - Internet Gateway
-- Bastion Host
 - Security Groups
+- Bastion Host
 - Ubuntu Server 22.04
 - NGINX
 - SSH
@@ -116,7 +143,7 @@ Un problème de connexion SSH vers l’instance privée a été rencontré.
 ✔ Serveur web accessible depuis Internet  
 ✔ Instance privée totalement isolée  
 ✔ Accès sécurisé via Bastion Host  
-✔ Architecture conforme à une logique entreprise  
+✔ Architecture conforme à une logique d’entreprise  
 ✔ Sécurité et segmentation réseau respectées  
 
 ---
@@ -126,7 +153,8 @@ Un problème de connexion SSH vers l’instance privée a été rencontré.
 - Ajout d’un NAT Gateway pour les mises à jour des instances privées
 - Automatisation avec Terraform (Infrastructure as Code)
 - Ajout d’un Load Balancer pour la haute disponibilité
-- Mise en place de monitoring (CloudWatch)
+- Mise en place d’un monitoring (CloudWatch)
+- Renforcement de la sécurité via IAM roles
 
 ---
 
@@ -134,4 +162,4 @@ Un problème de connexion SSH vers l’instance privée a été rencontré.
 
 Ce projet m’a permis de comprendre concrètement l’architecture cloud AWS et les bonnes pratiques de sécurité réseau.
 
-L’ajout d’un Bastion Host permet de reproduire une architecture plus réaliste utilisée en entreprise, notamment pour sécuriser l’accès aux environnements sensibles.
+La mise en place d’un Bastion Host permet de reproduire une architecture réaliste utilisée en entreprise pour sécuriser les accès aux environnements sensibles tout en conservant une administration centralisée.
