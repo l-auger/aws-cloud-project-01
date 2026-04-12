@@ -1,116 +1,125 @@
-# ☁️ Projet-Cloud — Infrastructure AWS (VPC & Sécurité)
+# ☁️ Cloud-Projet-01 — Architecture Cloud AWS sécurisée
 
 ![AWS](https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazon-aws)
-![VPC](https://img.shields.io/badge/AWS-VPC-blue?style=for-the-badge)
-![EC2](https://img.shields.io/badge/AWS-EC2-yellow?style=for-the-badge)
-![NGINX](https://img.shields.io/badge/Web-NGINX-green?style=for-the-badge&logo=nginx)
-![Status](https://img.shields.io/badge/Status-Terminé-success?style=for-the-badge)
+![Networking](https://img.shields.io/badge/Network-VPC-blue?style=for-the-badge)
+![EC2](https://img.shields.io/badge/Compute-EC2-yellow?style=for-the-badge)
+![Security](https://img.shields.io/badge/Security-Best_Practices-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Project-Completed-success?style=for-the-badge)
 
 ---
 
 ## 🎯 Objectif du projet
 
-Ce projet consiste à concevoir et déployer une architecture réseau sécurisée sur AWS afin de comprendre les fondamentaux du cloud computing en environnement réel.
+Ce projet consiste à concevoir et déployer une architecture réseau sécurisée sur AWS afin de reproduire un environnement proche d’un cas réel en entreprise.
 
-L’objectif est de reproduire une infrastructure de type entreprise avec séparation des réseaux, contrôle des accès et hébergement d’un service web.
-
----
-
-## 🧠 Compétences développées
-
-✔ Conception d’une architecture cloud AWS  
-✔ Création et configuration d’un VPC  
-✔ Segmentation réseau (public / privé)  
-✔ Gestion des flux avec Security Groups  
-✔ Déploiement de machines virtuelles EC2  
-✔ Mise en place d’un serveur web (NGINX)  
-✔ Analyse des problèmes réseau et debugging SSH  
+L’objectif n’est pas uniquement de “faire fonctionner des machines”, mais de comprendre la logique d’architecture cloud :
+- isolation réseau
+- exposition contrôlée des services
+- gestion des flux internes
+- séparation des responsabilités réseau
 
 ---
 
-## 🏗️ Architecture
+## 🧠 Ce que ce projet démontre
 
-📌 Le projet est basé sur :
+Ce projet met en avant ma capacité à :
 
-- Un VPC isolé
-- Un subnet public (serveur web)
-- Un subnet privé (application interne)
-- Une Internet Gateway
-- Des Security Groups pour filtrer les accès
-
-📷 Architecture :
-![Architecture](./architecture/schema-vpc.png)
+- Concevoir une architecture cloud cohérente et sécurisée
+- Comprendre les flux réseau dans un VPC AWS
+- Segmenter un environnement en zones publiques et privées
+- Sécuriser des instances via Security Groups
+- Identifier et corriger des problèmes de connectivité (debug réseau)
+- Déployer et configurer un service web sur une instance Linux
 
 ---
 
-## 🌐 Fonctionnement
+## 🏗️ Architecture mise en place
 
-- Le serveur web est accessible via Internet (HTTP)
-- L’instance privée est isolée du réseau public
-- Les échanges internes sont sécurisés via SSH contrôlé
-- Aucun accès direct Internet sur la machine privée
+L’infrastructure repose sur une architecture simple mais réaliste :
 
----
+- Un **VPC isolé**
+- Un **subnet public** pour les services exposés
+- Un **subnet privé** pour les services internes
+- Une **Internet Gateway** pour l’accès sortant/public
+- Des **Security Groups** pour contrôler les flux entrants/sortants
 
-## 🔐 Sécurité mise en place
-
-- Séparation réseau public / privé
-- Firewall virtuel via Security Groups
-- Accès SSH restreint par IP ou instance source
-- Absence d’exposition directe de la machine privée
+👉 Le schéma d’architecture est disponible dans le dossier `/architecture`.
 
 ---
 
-## 🖥️ Technologies utilisées
+## 🌐 Logique de fonctionnement
 
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws)
-![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-E95420?logo=ubuntu)
-![Linux](https://img.shields.io/badge/Linux-Server-black?logo=linux)
-![Networking](https://img.shields.io/badge/Network-VPC-blue)
+- Une instance EC2 publique héberge un serveur web (NGINX)
+- Cette instance est accessible depuis Internet via HTTP
+- Une seconde instance EC2 est placée dans un subnet privé
+- Elle n’est pas accessible directement depuis Internet
+- L’accès entre les deux instances est contrôlé via des règles de sécurité
+
+Cette séparation permet de simuler une architecture multi-niveaux utilisée en production.
+
+---
+
+## 🔐 Sécurité et bonnes pratiques appliquées
+
+- Isolation réseau via VPC
+- Absence d’IP publique sur les ressources sensibles
+- Restriction des accès SSH par source autorisée
+- Utilisation de Security Groups comme firewall applicatif
+- Principe du moindre privilège appliqué aux flux réseau
+
+---
+
+## 🧩 Problème rencontré et résolution
+
+Un problème majeur a été rencontré lors de la tentative de connexion SSH à l’instance privée.
+
+### Cause
+- absence d’exposition réseau volontaire (subnet privé)
+- règles Security Group insuffisantes entre instances
+- mauvaise compréhension initiale des flux internes AWS
+
+### Résolution
+- ajout d’une règle SSH autorisant uniquement le Security Group de l’instance publique
+- compréhension du rôle des Security Groups comme firewall stateful
+
+---
+
+## 🖥️ Stack technique
 
 - AWS VPC
 - AWS EC2
-- AWS Internet Gateway
-- AWS Security Groups
+- Internet Gateway
+- Security Groups
 - Ubuntu Server 22.04
 - NGINX
+- SSH
 
 ---
 
-## ⚙️ Problème rencontré
+## 📈 Résultat
 
-Lors de la mise en place, l’accès SSH à l’instance privée ne fonctionnait pas.
+L’architecture finale permet :
 
-### Cause :
-- absence d’accès Internet
-- règles Security Group insuffisantes
-- mauvaise compréhension des flux réseau internes
-
-### Résolution :
-- ajout d’une règle SSH depuis le Security Group du serveur web
-
----
-
-## 📈 Résultat final
-
-✔ Serveur web accessible depuis Internet  
-✔ Serveur privé isolé et sécurisé  
-✔ Communication interne contrôlée  
-✔ Architecture fonctionnelle et conforme aux bonnes pratiques cloud  
+- Un accès public contrôlé au serveur web
+- Une isolation complète des ressources privées
+- Une communication interne sécurisée entre instances
+- Une base d’architecture cloud proche des standards industriels
 
 ---
 
 ## 🚀 Améliorations possibles
 
-- Mise en place d’un Bastion Host 🔐  
-- Ajout d’un NAT Gateway 🌍  
-- Automatisation avec Terraform ⚙️  
-- Load Balancer + scalabilité 📈  
+Pour aller plus loin dans une approche production :
+
+- Ajout d’un Bastion Host pour l’accès aux ressources privées
+- Mise en place d’un NAT Gateway pour les mises à jour sortantes
+- Automatisation de l’infrastructure avec Terraform
+- Mise en place d’un Load Balancer pour la haute disponibilité
 
 ---
 
 ## 📚 Conclusion
 
-Ce projet m’a permis de comprendre concrètement l’architecture cloud AWS et les bonnes pratiques de segmentation réseau et sécurité.
+Ce projet m’a permis de comprendre concrètement les bases de l’architecture cloud AWS, notamment la segmentation réseau, la sécurité des flux et le rôle des composants réseau dans un environnement distribué.
 
-Il constitue une première étape vers la conception d’infrastructures cloud professionnelles.
+Il représente une première étape vers des architectures cloud plus complexes et scalables utilisées en entreprise.
