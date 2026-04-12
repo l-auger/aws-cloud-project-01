@@ -1,86 +1,100 @@
 # ☁️ Cloud-Projet-01 — Architecture Cloud AWS sécurisée
 
 ![AWS](https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazon-aws)
-![Networking](https://img.shields.io/badge/Network-VPC-blue?style=for-the-badge)
+![VPC](https://img.shields.io/badge/Network-VPC-blue?style=for-the-badge)
 ![EC2](https://img.shields.io/badge/Compute-EC2-yellow?style=for-the-badge)
 ![Security](https://img.shields.io/badge/Security-Best_Practices-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Project-Completed-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 
 ---
 
 ## 🎯 Objectif du projet
 
-Ce projet consiste à concevoir et déployer une architecture réseau sécurisée sur AWS afin de reproduire un environnement proche d’un cas réel en entreprise.
+Ce projet a pour objectif de concevoir et déployer une architecture cloud sécurisée sur AWS.
 
-L’objectif n’est pas uniquement de “faire fonctionner des machines”, mais de comprendre la logique d’architecture cloud :
-- isolation réseau
-- exposition contrôlée des services
-- gestion des flux internes
-- séparation des responsabilités réseau
+Il reproduit un environnement proche d’une infrastructure d’entreprise afin de comprendre :
+- la segmentation réseau
+- la sécurité des accès
+- la gestion des flux entre environnements public et privé
+- les bonnes pratiques d’administration cloud
 
 ---
 
-## 🧠 Ce que ce projet démontre
+## 🧠 Compétences démontrées
 
 Ce projet met en avant ma capacité à :
 
-- Concevoir une architecture cloud cohérente et sécurisée
-- Comprendre les flux réseau dans un VPC AWS
-- Segmenter un environnement en zones publiques et privées
-- Sécuriser des instances via Security Groups
-- Identifier et corriger des problèmes de connectivité (debug réseau)
-- Déployer et configurer un service web sur une instance Linux
+- Concevoir une architecture cloud sur AWS
+- Mettre en place un VPC avec segmentation réseau
+- Gérer des instances EC2 publiques et privées
+- Sécuriser les accès via Security Groups
+- Comprendre les flux réseau entre sous-réseaux
+- Mettre en place un Bastion Host
+- Diagnostiquer et corriger des problèmes de connectivité (SSH / réseau)
 
 ---
 
-## 🏗️ Architecture mise en place
+## 🏗️ Architecture globale
 
-L’infrastructure repose sur une architecture simple mais réaliste :
+L’architecture est composée de 3 éléments principaux :
 
-- Un **VPC isolé**
-- Un **subnet public** pour les services exposés
-- Un **subnet privé** pour les services internes
-- Une **Internet Gateway** pour l’accès sortant/public
-- Des **Security Groups** pour contrôler les flux entrants/sortants
+- **Bastion Host** (accès sécurisé)
+- **Subnet public** (serveur web)
+- **Subnet privé** (serveur applicatif)
 
-👉 Le schéma d’architecture est disponible dans le dossier `/architecture`.
+👉 Le schéma d’architecture est disponible dans `/architecture`.
 
 ---
 
-## 🌐 Logique de fonctionnement
+## 🛡️ Bastion Host (point d’accès sécurisé)
 
-- Une instance EC2 publique héberge un serveur web (NGINX)
-- Cette instance est accessible depuis Internet via HTTP
-- Une seconde instance EC2 est placée dans un subnet privé
-- Elle n’est pas accessible directement depuis Internet
-- L’accès entre les deux instances est contrôlé via des règles de sécurité
+Le Bastion Host est une instance EC2 placée dans le subnet public.
 
-Cette séparation permet de simuler une architecture multi-niveaux utilisée en production.
+### 🎯 Rôle :
+- Point d’entrée unique vers le réseau privé
+- Accès SSH contrôlé et limité
+- Réduction de l’exposition des machines internes
+
+### 🔗 Flux :
+Utilisateur → Bastion → Instance privée
+
+### 🔐 Sécurité :
+- SSH limité à une IP spécifique
+- Aucun accès direct Internet vers les instances privées
 
 ---
 
-## 🔐 Sécurité et bonnes pratiques appliquées
+## 🌐 Fonctionnement de l’architecture
+
+- Le serveur web (EC2 public) est accessible depuis Internet via HTTP
+- Le Bastion Host permet un accès sécurisé au réseau interne
+- L’instance privée n’est pas accessible directement depuis Internet
+- Les échanges internes sont contrôlés via Security Groups
+
+---
+
+## 🔐 Sécurité mise en place
 
 - Isolation réseau via VPC
+- Séparation public / privé
+- Bastion Host comme point d’entrée sécurisé
+- Security Groups appliquant le principe du moindre privilège
 - Absence d’IP publique sur les ressources sensibles
-- Restriction des accès SSH par source autorisée
-- Utilisation de Security Groups comme firewall applicatif
-- Principe du moindre privilège appliqué aux flux réseau
 
 ---
 
-## 🧩 Problème rencontré et résolution
+## 🧩 Problème rencontré
 
-Un problème majeur a été rencontré lors de la tentative de connexion SSH à l’instance privée.
+Un problème de connexion SSH vers l’instance privée a été rencontré.
 
-### Cause
-- absence d’exposition réseau volontaire (subnet privé)
-- règles Security Group insuffisantes entre instances
-- mauvaise compréhension initiale des flux internes AWS
+### Cause :
+- absence d’accès direct volontaire (subnet privé)
+- règles Security Group insuffisantes
+- mauvaise compréhension initiale des flux AWS
 
-### Résolution
-- ajout d’une règle SSH autorisant uniquement le Security Group de l’instance publique
-- compréhension du rôle des Security Groups comme firewall stateful
+### Résolution :
+- mise en place d’un Bastion Host
+- configuration des Security Groups pour autoriser uniquement les flux internes nécessaires
 
 ---
 
@@ -89,6 +103,7 @@ Un problème majeur a été rencontré lors de la tentative de connexion SSH à 
 - AWS VPC
 - AWS EC2
 - Internet Gateway
+- Bastion Host
 - Security Groups
 - Ubuntu Server 22.04
 - NGINX
@@ -96,30 +111,27 @@ Un problème majeur a été rencontré lors de la tentative de connexion SSH à 
 
 ---
 
-## 📈 Résultat
+## 📈 Résultat final
 
-L’architecture finale permet :
-
-- Un accès public contrôlé au serveur web
-- Une isolation complète des ressources privées
-- Une communication interne sécurisée entre instances
-- Une base d’architecture cloud proche des standards industriels
+✔ Serveur web accessible depuis Internet  
+✔ Instance privée totalement isolée  
+✔ Accès sécurisé via Bastion Host  
+✔ Architecture conforme à une logique entreprise  
+✔ Sécurité et segmentation réseau respectées  
 
 ---
 
 ## 🚀 Améliorations possibles
 
-Pour aller plus loin dans une approche production :
-
-- Ajout d’un Bastion Host pour l’accès aux ressources privées
-- Mise en place d’un NAT Gateway pour les mises à jour sortantes
-- Automatisation de l’infrastructure avec Terraform
-- Mise en place d’un Load Balancer pour la haute disponibilité
+- Ajout d’un NAT Gateway pour les mises à jour des instances privées
+- Automatisation avec Terraform (Infrastructure as Code)
+- Ajout d’un Load Balancer pour la haute disponibilité
+- Mise en place de monitoring (CloudWatch)
 
 ---
 
 ## 📚 Conclusion
 
-Ce projet m’a permis de comprendre concrètement les bases de l’architecture cloud AWS, notamment la segmentation réseau, la sécurité des flux et le rôle des composants réseau dans un environnement distribué.
+Ce projet m’a permis de comprendre concrètement l’architecture cloud AWS et les bonnes pratiques de sécurité réseau.
 
-Il représente une première étape vers des architectures cloud plus complexes et scalables utilisées en entreprise.
+L’ajout d’un Bastion Host permet de reproduire une architecture plus réaliste utilisée en entreprise, notamment pour sécuriser l’accès aux environnements sensibles.
