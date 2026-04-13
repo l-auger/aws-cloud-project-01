@@ -14,7 +14,9 @@
 - **Subnet** : public-subnet  
 - **IP publique** : activée  
 - **Security Group** : SG-bastion  
-- **OS** : Ubuntu Server 22.04  
+- **OS** : Ubuntu Server 22.04
+  
+![ec2](./screenshots/EC2-bastion-conf.png)
 
 ---
 
@@ -26,7 +28,9 @@
 - **Subnet** : public-subnet  
 - **IP publique** : activée  
 - **Security Group** : SG-web  
-- **OS** : Ubuntu Server 22.04  
+- **OS** : Ubuntu Server 22.04
+  
+![ec2](./screenshots/EC2-web-conf.png)
 
 ---
 
@@ -40,6 +44,8 @@
 - **Security Group** : SG-private  
 - **OS** : Ubuntu Server 22.04  
 
+![ec2](./screenshots/EC2-app-conf.png)
+
 ---
 
 ## 🧠 Résumé
@@ -47,3 +53,6 @@
 - 🟢 Bastion : accès SSH sécurisé
 - 🟡 Web Server : exposé publiquement
 - 🔴 App Server : totalement isolé en réseau privé
+
+![ec2](./screenshots/EC2-list.png)
+  
