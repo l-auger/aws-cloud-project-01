@@ -52,7 +52,7 @@ Le trafic HTTP est redirigé vers l’App Server.
 
 ### 📸 Preuve
 
-![Configuration API Reverse Proxy](./screenshots/12-Droits-API.png)
+![Configuration API Reverse Proxy](./screenshots/12-Ajout-confnginxAPI.png)
 
 ---
 
