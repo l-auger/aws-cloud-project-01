@@ -19,7 +19,7 @@ Dans AWS :
 
 Trois Security Groups ont été créés :
 
-- **SG-bastion** → accès SSH depuis Internet
+- **SG-bastion** → accès SSH depuis Internet (IP d'un PC autorisé) 
 - **SG-web** → accès public HTTP/HTTPS + SSH depuis Bastion
 - **SG-private** → accès interne (SSH + API) uniquement depuis les SG autorisés
 
