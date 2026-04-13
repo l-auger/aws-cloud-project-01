@@ -36,7 +36,7 @@ Le VPC représente :
 ## 🧠 Concepts importants
 
 - Le VPC est équivalent à un **réseau d’entreprise**
-- Il permet de définir une plage IP interne (comme en on-premise)
+- Il permet de définir une plage IP interne 
 - Toutes les ressources AWS seront déployées à l’intérieur de ce réseau
 
 ---
