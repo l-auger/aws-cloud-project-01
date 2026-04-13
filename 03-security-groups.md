@@ -131,10 +131,10 @@ Tentative d’accès SSH direct depuis le Web Server vers l’instance privée �
 ![SG](./screenshots/sg-bastion.png)
 
 ### SG-web
-![SG](./screenshots/sg-public.png)
+![SG-pub](./screenshots/sg-public.png)
 
 ### SG-private
-![SG](./screenshots/sg-private.png)
+![SG-pv](./screenshots/sg-private.png)
 
 ---
 
