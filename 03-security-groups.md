@@ -1,33 +1,27 @@
 # 🔐 Security Groups — Cloud-Projet-01
 
----
-
 ## 🎯 Objectif
-
-L’objectif de cette étape est de sécuriser les accès aux différentes instances de l’infrastructure AWS en utilisant des Security Groups.
-
-Les Security Groups agissent comme des **pare-feux au niveau des instances**, permettant de contrôler précisément les flux réseau entrants et sortants.
+Sécuriser les accès aux différentes instances de l’infrastructure AWS grâce aux Security Groups, qui jouent le rôle de pare-feux au niveau des instances EC2.
 
 ---
 
 ## 🧠 Concept clé
-
-Dans AWS, aucune communication réseau n’est autorisée par défaut sans règle explicite.
-
-Chaque instance EC2 est associée à un Security Group qui définit :
-
-- les accès autorisés en entrée (**inbound rules**)
-- les connexions autorisées en sortie (**outbound rules**)
+Dans AWS :
+- Rien n’est autorisé par défaut
+- Chaque flux doit être explicitement ouvert
+- Les Security Groups contrôlent :
+  - les **inbound rules** (trafic entrant)
+  - les **outbound rules** (trafic sortant)
 
 ---
 
 ## 🧱 Architecture des Security Groups
 
-Trois Security Groups ont été créés pour segmenter et sécuriser les accès :
+Trois Security Groups ont été créés :
 
-- **SG-bastion**
-- **SG-web**
-- **SG-private**
+- **SG-bastion** → accès SSH depuis Internet
+- **SG-web** → accès public HTTP/HTTPS + SSH depuis Bastion
+- **SG-private** → accès interne (SSH + API) uniquement depuis les SG autorisés
 
 ---
 
@@ -38,51 +32,52 @@ Permettre un accès SSH sécurisé depuis Internet vers le Bastion Host.
 
 ### 🔐 Règles
 
-**Inbound :**
-- SSH (port 22) → uniquement depuis mon adresse IP
+**Inbound**
+- SSH (22) → depuis mon IP uniquement
 
-**Outbound :**
-- Tout le trafic autorisé (par défaut)
+**Outbound**
+- Tout trafic autorisé (par défaut)
 
 ---
 
 ## 🟡 SG-web
 
 ### 🎯 Rôle
-Permettre l’accès public au serveur web.
+Permettre l’accès public au serveur web et autoriser l’administration via le Bastion.
 
 ### 🔐 Règles
 
-**Inbound :**
-- HTTP (port 80) → 0.0.0.0/0
-- HTTPS (port 443) → 0.0.0.0/0 (optionnel)
+**Inbound**
+- HTTP (80) → `0.0.0.0/0`
+- HTTPS (443) → `0.0.0.0/0`
+- SSH (22) → depuis **SG-bastion**
 
-**Important :**
-- ❌ Aucun accès SSH autorisé depuis Internet
+⚠️ Important :
+- ❌ Aucun SSH direct depuis Internet
+- ✔ Administration uniquement via le Bastion
 
-**Outbound :**
-- Tout le trafic autorisé
+**Outbound**
+- Tout trafic autorisé
 
 ---
 
 ## 🔴 SG-private
 
 ### 🎯 Rôle
-Sécuriser l’accès à l’instance située dans le subnet privé en limitant strictement les connexions autorisées.
+Protéger l’instance privée (App Server) en limitant strictement les flux autorisés.
 
 ### 🔐 Règles
 
-**Inbound :**
-- SSH (port 22) → uniquement depuis **SG-bastion**
+**Inbound**
+- SSH (22) → depuis **SG-bastion**
+- API interne (8080) → depuis **SG-web**
 
-👉 Contrairement à une configuration classique basée sur une adresse IP, cette règle s’appuie directement sur un autre Security Group.
+👉 Le Bastion sert uniquement à l’administration (SSH)  
+👉 Le Web Server est le seul autorisé à accéder à l’API interne  
+👉 Aucun autre flux n’est autorisé
 
-👉 Cela signifie que **seules les instances associées au SG-bastion (le Bastion Host)** peuvent initier une connexion SSH vers l’instance privée.
-
-👉 Même une instance située dans le même VPC (ex : web-server) ne pourra pas se connecter si elle n’appartient pas à ce Security Group.
-
-**Outbound :**
-- Tout le trafic autorisé
+**Outbound**
+- Tout trafic autorisé
 
 ---
 
@@ -90,68 +85,56 @@ Sécuriser l’accès à l’instance située dans le subnet privé en limitant 
 
 Grâce à cette configuration :
 
-- L’accès SSH depuis Internet est uniquement possible vers le Bastion Host
-- Le serveur web est accessible uniquement en HTTP/HTTPS
-- L’instance privée n’est pas accessible directement depuis Internet
+- ✔ SSH depuis Internet → uniquement vers le Bastion
+- ✔ Web Server accessible publiquement en HTTP/HTTPS
+- ✔ App Server totalement isolé d’Internet
+- ✔ Flux interne contrôlé :
+  - Bastion → Web Server (SSH)
+  - Bastion → App Server (SSH)
+  - Web Server → App Server (API 8080)
 
-👉 Flux réel :
-
-PC → Bastion (SSH autorisé)
-Bastion → Instance privée (autorisé via SG)
-Autres → Instance privée (refusé)
+👉 Toute autre tentative d’accès est refusée.
 
 ---
 
 ## 🧠 Point important
 
-L’utilisation d’un Security Group comme source (SG-bastion) permet :
+L’utilisation d’un Security Group comme source (ex : `SG-bastion → SG-private`) permet :
 
-- de créer une **relation de confiance entre instances**
-- de ne pas dépendre d’une adresse IP fixe
-- de renforcer la sécurité globale
-- de contrôler précisément les flux internes
-
-👉 C’est une bonne pratique recommandée dans AWS pour les architectures sécurisées.
+- Une relation de confiance entre instances
+- Une sécurité indépendante des IP
+- Un contrôle précis des flux internes
+- Une architecture conforme aux bonnes pratiques AWS
 
 ---
 
 ## 🧩 Problème rencontré
 
-Une tentative d’accès SSH direct entre une instance publique et une instance privée a échoué.
+### ❌ Symptôme
+Tentative d’accès SSH direct depuis le Web Server vers l’instance privée échouée.
 
-### 🔍 Cause :
+### 🔍 Cause
+- Aucune règle SSH autorisant ce flux
+- Isolation normale du subnet privé
+- Compréhension initiale incomplète des Security Groups
 
-- absence de règle autorisant explicitement le flux SSH
-- mauvaise compréhension initiale du fonctionnement des Security Groups
-- isolation normale du subnet privé
-
----
-
-## 🛠️ Solution
-
-- création d’un Security Group dédié au Bastion
-- autorisation du SSH vers l’instance privée uniquement depuis ce groupe
-- mise en place d’un accès indirect sécurisé (bastion)
+### 🛠️ Solution
+- Création d’un SG dédié au Bastion
+- Autorisation du SSH uniquement depuis `SG-bastion`
+- Mise en place d’un accès indirect sécurisé via le Bastion
 
 ---
 
 ## 📸 Captures
 
 ### SG-bastion
-
-![SG Bastion](./screenshots/sg-bastion.png)
-
----
+![SG](./screenshots/sg-bastion.png)
 
 ### SG-web
-
-![SG Web](./screenshots/sg-web.png)
-
----
+![SG](./screenshots/sg-public.png)
 
 ### SG-private
-
-![SG Private](./screenshots/sg-private.png)
+![SG](./screenshots/sg-private.png)
 
 ---
 
@@ -162,4 +145,7 @@ Une tentative d’accès SSH direct entre une instance publique et une instance 
 - Réduction de la surface d’attaque
 - Architecture conforme aux bonnes pratiques cloud
 
-Les Security Groups jouent un rôle essentiel dans la sécurisation de l’infrastructure AWS.
+---
+
+## 🚀 Conclusion
+Les Security Groups assurent la sécurité globale de l’infrastructure en contrôlant finement les flux réseau entre les différentes couches de l’architecture.
