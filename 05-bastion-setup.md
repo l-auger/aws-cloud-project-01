@@ -53,7 +53,7 @@ Le Bastion Host joue un rôle central dans la sécurisation de l’infrastructur
 
 ## 🔄 Flux autorisés
 
-- 🌍 Internet → 🟢 Bastion *(SSH uniquement)*
+- 🌍 Internet (Ip d'administration) → 🟢 Bastion *(SSH uniquement)*
 - 🟢 Bastion → 🟡 Web Server *(SSH)*
 - 🟢 Bastion → 🔴 App Server *(SSH)*
 
