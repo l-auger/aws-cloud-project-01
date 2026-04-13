@@ -108,4 +108,4 @@ Cette configuration garantit :
 - 🔐 une sécurité renforcée via Bastion Host
 - 🧱 une segmentation claire entre public et privé
 - 🚫 aucune exposition directe des serveurs internes
-- 🏗️ une architecture conforme aux bonnes pratiques AW
+- 🏗️ une architecture conforme aux bonnes pratiques AWS
