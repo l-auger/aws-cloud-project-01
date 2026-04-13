@@ -30,13 +30,13 @@ Installation de NGINX
 sudo apt install nginx -y
 ```
 
-###🔍 Vérification du service
+### 🔍 Vérification du service
 
 ```bash
 sudo systemctl status nginx
 ```
 
-###🚀 Accès au serveur web
+### 🚀 Accès au serveur web
 
 - Une fois NGINX installé, le service est accessible sur le port 80.
 
@@ -45,22 +45,22 @@ Accès via navigateur :
 http://IP_PRIVATE_WEBSERVER
 ```
 
-##📸 Preuves d’installation
+## 📸 Preuves d’installation
 
-###🔧 Installation de NGINX
+### 🔧 Installation de NGINX
 ![nginx](./screenshots/08-install-nginx-websrv.png)
 
-###🌍 Accès au Web Server
+### 🌍 Accès au Web Server
 ![nginx](./screenshots/09-access-websrvnginx.png)
 
-##🧠 Résultat
+## 🧠 Résultat
 
 ✔ NGINX correctement installé
 ✔ Service actif et fonctionnel
 ✔ Page web accessible via HTTP
 ✔ Intégration réussie dans l’architecture sécurisée
 
-##🚀 Conclusion
+## 🚀 Conclusion
 
 L’installation de NGINX permet de valider le bon fonctionnement du Web Server dans l’architecture AWS.
 Le serveur répond correctement aux requêtes HTTP et est intégré dans un environnement sécurisé sans exposition directe à Internet.
