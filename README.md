@@ -128,61 +128,90 @@ Caractéristiques :
 Pas d’IP publique
 Accessible uniquement depuis SG-Public
 API interne simulée via Bash + netcat
+## 🧩 App Server (API interne)
 
-##🔐 Sécurité mise en place
-Isolation complète via VPC
-Subnet public / privé
-Bastion Host obligatoire pour l’administration
-Reverse proxy pour protéger l’API
-Security Groups en chaîne
-Principe du moindre privilège appliqué partout
+L’App Server est totalement privé et héberge une API simple sur le port 8080.
 
-##🧪 Tests réalisés
-✔ Administration
-SSH → Bastion
-SSH Bastion → Web Server
-SSH Bastion → App Server
-✔ Application
+### Caractéristiques :
+- Pas d’IP publique  
+- Accessible uniquement depuis SG-Public  
+- API interne simulée via Bash + netcat  
+
+---
+
+## 🔐 Sécurité mise en place
+
+- Isolation complète via VPC  
+- Subnet public / privé  
+- Bastion Host obligatoire pour l’administration  
+- Reverse proxy pour protéger l’API  
+- Security Groups en chaîne  
+- Principe du moindre privilège appliqué partout  
+
+---
+
+## 🧪 Tests réalisés
+
+### ✔ Administration
+- SSH → Bastion  
+- SSH Bastion → Web Server  
+- SSH Bastion → App Server  
+
+### ✔ Application
+```bash
 curl http://localhost/api/
-✔ Sécurité
-Impossible d’accéder à l’App Server depuis Internet
-Impossible d’accéder au Web Server en SSH depuis Internet
+```
+## 🔐 Sécurité
 
-##🖥️ Stack technique
-AWS VPC
-AWS EC2
-Internet Gateway
-Security Groups
-Bastion Host
-Ubuntu Server 22.04
-NGINX (reverse proxy)
-API interne (Bash + netcat)
-SSH
+- Impossible d’accéder à App Server depuis Internet  
+- Impossible d’accéder à Web Server en SSH depuis Internet  
 
-##📈 Résultat final
-✔ Serveur web accessible depuis Internet
-✔ API interne accessible uniquement via reverse proxy
-✔ Instance privée totalement isolée
-✔ Accès sécurisé via Bastion Host
-✔ Architecture conforme aux bonnes pratiques cloud
-✔ Flux réseau maîtrisés et documentés
+---
 
-##🚀 Améliorations possibles
-NAT Gateway pour mises à jour des instances privées
-Infrastructure as Code (Terraform)
-Load Balancer (ALB) pour haute disponibilité
-Monitoring via CloudWatch
-IAM Roles AWS
-HTTPS via Let’s Encrypt
+## 🖥️ Stack technique
 
-##📚 Conclusion
+- AWS VPC  
+- AWS EC2  
+- Internet Gateway  
+- Security Groups  
+- Bastion Host  
+- Ubuntu Server 22.04  
+- NGINX (reverse proxy)  
+- API interne (Bash + netcat)  
+- SSH  
+
+---
+
+## 📈 Résultat final
+
+- ✔ Serveur web accessible depuis Internet  
+- ✔ API interne accessible uniquement via reverse proxy  
+- ✔ Instance privée totalement isolée  
+- ✔ Accès sécurisé via Bastion Host  
+- ✔ Architecture conforme aux bonnes pratiques cloud  
+- ✔ Flux réseau maîtrisés et documentés  
+
+---
+
+## 🚀 Améliorations possibles
+
+- NAT Gateway pour mises à jour des instances privées  
+- Infrastructure as Code (Terraform)  
+- Load Balancer (ALB) pour haute disponibilité  
+- Monitoring via CloudWatch  
+- IAM Roles AWS  
+- HTTPS via Let’s Encrypt  
+
+---
+
+## 📚 Conclusion
 
 Ce projet m’a permis de construire une architecture cloud AWS réaliste, sécurisée et conforme aux bonnes pratiques d’entreprise.
 
 Il démontre ma capacité à :
 
-concevoir une architecture cloud
-sécuriser les accès
-comprendre les flux réseau
-diagnostiquer et résoudre des problèmes
-mettre en place un reverse proxy et une API interne
+- concevoir une architecture cloud  
+- sécuriser les accès  
+- comprendre les flux réseau  
+- diagnostiquer et résoudre des problèmes  
+- mettre en place un reverse proxy et une API interne  
