@@ -10,7 +10,7 @@
 
 ## 🏗️ Architecture globale
 
-![Architecture AWS](TON_LIEN_IMAGE_ICI)
+![Architecture AWS](screenshots/aws-architecture.png)
 
 Ce projet simule une infrastructure cloud sécurisée sur AWS, inspirée d’un environnement d’entreprise.
 
