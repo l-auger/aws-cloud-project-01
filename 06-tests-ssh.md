@@ -96,10 +96,10 @@ Cet accès fonctionne car :
 
 ## 🧠 Conclusion des tests SSH
 
-✔ Le Bastion est le seul point d’entrée SSH depuis Internet
-✔ Le Web Server possède une IP publique, mais SSH est privé
-✔ Le App Server est totalement isolé (privé + pas d’IP publique)
-✔ L’architecture respecte le modèle zero direct access
+- ✔ Le Bastion est le seul point d’entrée SSH depuis Internet
+- ✔ Le Web Server possède une IP publique, mais SSH est privé
+- ✔ Le App Server est totalement isolé (privé + pas d’IP publique)
+- ✔ L’architecture respecte le modèle zero direct access
 
 ## 🚀 Résultat global
 
