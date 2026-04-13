@@ -50,7 +50,7 @@ http://IP_PRIVATE_WEBSERVER
 ### 🔧 Installation de NGINX
 ![nginx](./screenshots/08-install-nginx-websrv.png)
 
-###🌍 Accès au Web Server
+### 🌍 Accès au Web Server
 ![nginx](./screenshots/09-access-websrvnginx.png)
 
 ## 🧠 Résultat
