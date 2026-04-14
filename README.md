@@ -39,7 +39,8 @@ Même si l’infrastructure est réalisée sur AWS, les concepts sont transverse
 - Gestion d’instances virtuelles  
 - Contrôle des flux réseau  
 - Sécurisation des accès (Security Groups)  
-- Administration d’infrastructures cloud  
+- Administration d’infrastructures cloud
+  
 ---
 
 ## 🧠 Compétences démontrées
