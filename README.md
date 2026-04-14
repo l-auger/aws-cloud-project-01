@@ -181,7 +181,7 @@ curl http://localhost/api/
 - Utilisation d’un Bastion Host pour centraliser les accès SSH
 - Reverse proxy NGINX pour exposer uniquement un point d’entrée public
 - Utilisation de netcat pour simuler rapidement une API
-- 
+  
 ---
 
 ## ⚠️ Limitations
@@ -197,18 +197,7 @@ curl http://localhost/api/
 
 - Absence de NAT Gateway pour limiter les coûts
 - Architecture volontairement simple (lab pédagogique)
-
---- 
-
-## 🚀 Améliorations possibles
-
-- NAT Gateway pour mises à jour des instances privées
-- Infrastructure as Code (Terraform)
-- Load Balancer (ALB)
-- Monitoring via CloudWatch
-- IAM Roles AWS
-- HTTPS via Let’s Encrypt
-
+- 
 ---
 
 ## 📈 Résultat final
