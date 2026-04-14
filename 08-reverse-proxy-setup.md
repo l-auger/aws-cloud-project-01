@@ -24,7 +24,7 @@ Le reverse proxy permet de :
 
 - recevoir les requêtes HTTP côté Web Server
 - les rediriger vers le serveur applicatif interne
-- masquer complètement l’architecture backend
+- abstraire l’accès direct au serveur applicatif
 
 ---
 
