@@ -47,7 +47,7 @@ Le Bastion Host joue un rôle central dans la sécurisation de l’infrastructur
 - 🚫 Évite l’exposition directe des instances privées
 - 🎯 Centralise les accès SSH
 - 🔐 Renforce la sécurité globale de l’infrastructure
-- 🧱 Met en place une architecture en **“zero direct access”**
+- 🧱 Cette architecture évite tout accès direct aux instances privées depuis Internet
 
 ---
 
