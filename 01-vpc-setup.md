@@ -19,7 +19,7 @@ Le VPC a été créé avec les paramètres suivants :
 - **Type IP** : IPv4 uniquement  
 - **Tenancy** : Default  
 
-Ce CIDR permet de disposer d’un espace d’adressage suffisant pour créer plusieurs sous-réseaux.
+Le CIDR 10.0.0.0/16 permet de disposer d’un espace d’adressage suffisant pour segmenter le réseau en plusieurs sous-réseaux (publics et privés).
 
 ---
 
