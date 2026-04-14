@@ -55,4 +55,5 @@
 - 🔴 App Server : totalement isolé en réseau privé
 
 ![ec2](./screenshots/EC2-list.png)
-  
+
+- Chaque instance joue un rôle précis dans l’architecture en respectant le principe de séparation des responsabilités
