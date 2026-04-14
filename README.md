@@ -120,19 +120,13 @@ location /api/ {
     proxy_pass http://10.0.2.252:8080/;
 }
 ```
-## 🧩 App Server (API interne)
 
-L’App Server est totalement privé et héberge une API simple sur le port 8080.
-
-Caractéristiques :
-Pas d’IP publique
-Accessible uniquement depuis SG-Public
-API interne simulée via Bash + netcat
 ## 🧩 App Server (API interne)
 
 L’App Server est totalement privé et héberge une API simple sur le port 8080.
 
 ### Caractéristiques :
+
 - Pas d’IP publique  
 - Accessible uniquement depuis SG-Public  
 - API interne simulée via Bash + netcat  
@@ -201,8 +195,8 @@ curl http://localhost/api/
 
 ## 💰 Cost considerations
 
-Absence de NAT Gateway pour limiter les coûts
-Architecture volontairement simple (lab pédagogique)
+- Absence de NAT Gateway pour limiter les coûts
+- Architecture volontairement simple (lab pédagogique)
 
 --- 
 
