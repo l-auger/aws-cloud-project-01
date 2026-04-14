@@ -4,8 +4,8 @@
 
 ## 🎯 Objectif
 
-Installer et vérifier le bon fonctionnement de NGINX sur le Web Server afin de valider l’exposition du service HTTP.
-NGINX est utilisé ici comme serveur web et point d’entrée applicatif.
+- Installer et vérifier le bon fonctionnement de NGINX sur le Web Server afin de valider l’exposition du service HTTP.
+- NGINX est utilisé ici comme serveur web et point d’entrée applicatif.
 
 ---
 
