@@ -20,20 +20,26 @@ Objectif : comprendre et maîtriser une architecture cloud moderne avec segmenta
 
 ## 🎯 Objectif du projet
 
-Ce projet m’a permis de pratiquer et renforcer mes compétences en Cloud Computing à travers la mise en place d’une architecture AWS complète et sécurisée.
+Ce projet m’a permis de renforcer mes compétences en Cloud Computing à travers la mise en place d’une architecture AWS complète et sécurisée.
 
-Il s’inscrit dans une démarche de préparation aux certifications :
-- AZ-900 (Azure Fundamentals)
-- AZ-104 (Azure Administrator)
+Il s’inscrit dans une démarche de montée en compétences sur le cloud ainsi que de préparation à plusieurs certifications :
+
+- AWS Certified Cloud Practitioner  
+- AZ-900 (Azure Fundamentals)  
+- AZ-104 (Azure Administrator)  
+
+L’infrastructure a été réalisée sur AWS afin de travailler concrètement les concepts techniques (réseau, sécurité, déploiement).
+
+En parallèle, la préparation des certifications Azure me permet d’acquérir une vision multi-cloud et de mieux comprendre les équivalences entre les différents environnements.
 
 Même si l’infrastructure est réalisée sur AWS, les concepts sont transverses :
-- Virtualisation réseau (VPC / VNet)
-- Segmentation logique (subnets publics / privés)
-- Gestion d’instances virtuelles
-- Contrôle des flux réseau
-- Sécurisation des accès (Security Groups)
-- Administration d’infrastructures cloud
 
+- Virtualisation réseau (VPC / VNet)  
+- Segmentation logique (subnets publics / privés)  
+- Gestion d’instances virtuelles  
+- Contrôle des flux réseau  
+- Sécurisation des accès (Security Groups)  
+- Administration d’infrastructures cloud  
 ---
 
 ## 🧠 Compétences démontrées
