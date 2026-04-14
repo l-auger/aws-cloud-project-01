@@ -72,8 +72,8 @@ Grâce à cette configuration :
   - être accessibles depuis Internet
 
 - Les ressources dans le subnet privé :
-  - n’ont pas de route vers Internet
-  - restent isolées
+  - Les ressources du subnet privé ne disposent d’aucune route vers Internet
+  - restent isolées garantissant leur isolation complète
 
 ---
 
