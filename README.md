@@ -120,7 +120,7 @@ location /api/ {
     proxy_pass http://10.0.2.252:8080/;
 }
 ```
-##🧩 App Server (API interne)
+## 🧩 App Server (API interne)
 
 L’App Server est totalement privé et héberge une API simple sur le port 8080.
 
@@ -179,6 +179,41 @@ curl http://localhost/api/
 - NGINX (reverse proxy)  
 - API interne (Bash + netcat)  
 - SSH  
+
+---
+
+## 🔧 Design choices
+
+- Utilisation d’un Bastion Host pour centraliser les accès SSH
+- Reverse proxy NGINX pour exposer uniquement un point d’entrée public
+- Utilisation de netcat pour simuler rapidement une API
+- 
+---
+
+## ⚠️ Limitations
+
+- Pas de haute disponibilité (1 instance par rôle)
+- Pas de Load Balancer
+- Pas de monitoring (CloudWatch non configuré)
+- API simulée (non production-ready)
+
+---
+
+## 💰 Cost considerations
+
+Absence de NAT Gateway pour limiter les coûts
+Architecture volontairement simple (lab pédagogique)
+
+--- 
+
+## 🚀 Améliorations possibles
+
+- NAT Gateway pour mises à jour des instances privées
+- Infrastructure as Code (Terraform)
+- Load Balancer (ALB)
+- Monitoring via CloudWatch
+- IAM Roles AWS
+- HTTPS via Let’s Encrypt
 
 ---
 
