@@ -7,8 +7,8 @@ Sécuriser les accès aux différentes instances de l’infrastructure AWS grâc
 
 ## 🧠 Concept clé
 Dans AWS :
-- Rien n’est autorisé par défaut
-- Chaque flux doit être explicitement ouvert
+- Les Security Groups fonctionnent sur un modèle de filtrage explicite : tout trafic doit être autorisé manuellement
+- L’utilisation de Security Groups comme source permet de sécuriser les flux sans dépendre d’adresses IP statiques
 - Les Security Groups contrôlent :
   - les **inbound rules** (trafic entrant)
   - les **outbound rules** (trafic sortant)
